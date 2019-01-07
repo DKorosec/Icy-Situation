@@ -1,0 +1,63 @@
+<html>
+
+<head>
+ <script src="lib/matter.js"></script>
+ <script src="lib/initialize-game.js"></script>
+ <script src="lib/create-icebox.js"></script>
+ <script src="lib/create-icebox-spawner.js"></script>
+ <script src="lib/create-camera.js"></script>
+ <script src="main.js"></script>
+ <style>
+  html {
+   background-color: rgb(24, 24, 29);
+   overflow: hidden;
+  }
+
+  .noselect {
+   -webkit-touch-callout: none;
+   /* iOS Safari */
+   -webkit-user-select: none;
+   /* Safari */
+   -khtml-user-select: none;
+   /* Konqueror HTML */
+   -moz-user-select: none;
+   /* Firefox */
+   -ms-user-select: none;
+   /* Internet Explorer/Edge */
+   user-select: none;
+   /* Non-prefixed version, currently
+   supported by Chrome and Opera */
+  }
+
+  canvas {
+   height: 100%;
+   position: absolute;
+   margin: 0 auto;
+   left: 0;
+   right: 0;
+  }
+
+  #info {
+   z-index: 15;
+   font-family: "Arial Black", Gadget, sans-serif;
+   position: absolute;
+   text-align: center;
+   width: 100%;
+   left: 0;
+   right: 0;
+   font-size: 200%;
+   color: #FFFFFF;
+  }
+ </style>
+</head>
+
+<body>
+ <div id="info">
+  <h1 class="noselect" id="scoreH1"></h1>
+ </div>
+ <div id="gamecanvasdiv">
+ </div>
+</body>
+<script>main();</script>
+
+</html>
