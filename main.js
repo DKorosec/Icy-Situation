@@ -39,17 +39,22 @@ function main() {
    gameVariables.endgameScrolling.top = scrollTop;
    gameVariables.endgameScrolling.bot = scrollBot;
    if (score !== 0) {
+    const heightDiff = Math.abs(sortedIceboxes[0].body.position.y - sortedIceboxes[sortedIceboxes.length - 1].body.position.y);
     gameVariables.camera.durationMs = scrollingSpeedWhole;
     const isGoingUp = !gameVariables.endgameScrolling.goingDown;
     //set direction
     gameVariables.camera.goUp = isGoingUp;
     //has direction arrived at target ?
     if (gameVariables.camera.atTarget()) {
-     //then change direction
-     gameVariables.endgameScrolling.goingDown = isGoingUp;
-     gameVariables.camera.goUp = !isGoingUp;
-     //if we were going up, now we must go down!
-     gameVariables.camera.setTarget(isGoingUp ? scrollBot : scrollTop);
+     //only allow changes if was going up and now goes down
+     //or was going down and can now go up if the tower is higher than screen height
+     if (isGoingUp || gameVariables.windowHeight <= heightDiff) {
+      //then change direction
+      gameVariables.endgameScrolling.goingDown = isGoingUp;
+      gameVariables.camera.goUp = !isGoingUp;
+      //if we were going up, now we must go down!
+      gameVariables.camera.setTarget(isGoingUp ? scrollBot : scrollTop);
+     }
     }
     gameVariables.camera.update();
    }
