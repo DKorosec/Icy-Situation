@@ -39,7 +39,7 @@ function main() {
    gameVariables.endgameScrolling.top = scrollTop;
    gameVariables.endgameScrolling.bot = scrollBot;
    if (score !== 0) {
-    const heightDiff = Math.abs(sortedIceboxes[0].body.position.y - sortedIceboxes[sortedIceboxes.length - 1].body.position.y);
+    const heightDiff = 1.5 * dimension + Math.abs(sortedIceboxes[0].body.position.y - sortedIceboxes[sortedIceboxes.length - 1].body.position.y);
     gameVariables.camera.durationMs = scrollingSpeedWhole;
     const isGoingUp = !gameVariables.endgameScrolling.goingDown;
     //set direction
