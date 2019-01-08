@@ -29,23 +29,35 @@ function main() {
   const score = Math.abs(highestIcebox.body.position.y - bottomIB.body.position.y);
   scoreH1.innerHTML += (score / 1000).toFixed(2) + ' m';
 
+  const scrollTop = -highestIcebox.body.position.y - dimension * 1.5;
+  const scrollBot = -bottomIB.body.position.y - dimension * 1.5;
   if (gameVariables.isGameOver) {
    if (!scoreH1.innerHTML.includes('THE END')) {
     scoreH1.innerHTML += '<br>THE END<br>&#8634;';
    }
+   const scrollingSpeedWhole = score / dimension * 1500;  //1500ms per cube speed
+   gameVariables.endgameScrolling.top = scrollTop;
+   gameVariables.endgameScrolling.bot = scrollBot;
    if (score !== 0) {
-    gameVariables.camera.goUp = false;
-    gameVariables.camera.durationMs = score / dimension * 250; //250ms per cube speed
-    const scroll = -bottomIB.body.position.y - dimension * 1.5;
-    gameVariables.camera.setTarget(scroll);
+    gameVariables.camera.durationMs = scrollingSpeedWhole;
+    const isGoingUp = !gameVariables.endgameScrolling.goingDown;
+    //set direction
+    gameVariables.camera.goUp = isGoingUp;
+    //has direction arrived at target ?
+    if (gameVariables.camera.atTarget()) {
+     //then change direction
+     gameVariables.endgameScrolling.goingDown = isGoingUp;
+     gameVariables.camera.goUp = !isGoingUp;
+     //if we were going up, now we must go down!
+     gameVariables.camera.setTarget(isGoingUp ? scrollBot : scrollTop);
+    }
     gameVariables.camera.update();
    }
   } else {
    if (gameVariables.iceboxSpawner.canSpawn()) {
     gameVariables.iceboxSpawner.spawn();
    }
-   const scroll = -highestIcebox.body.position.y - dimension * 1.5;
-   gameVariables.camera.setTarget(scroll);
+   gameVariables.camera.setTarget(scrollTop);
    gameVariables.camera.update();
   }
   gameVariables.engine.world.gravity.x = gameVariables.orientation;
